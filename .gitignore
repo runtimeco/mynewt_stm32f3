@@ -4,7 +4,7 @@ obj
 tags
 .gdb_history
 *~
-.nest
+.app
 .DS_Store
 *.swp
 *.swo
