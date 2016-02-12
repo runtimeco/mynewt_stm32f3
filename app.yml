@@ -17,4 +17,4 @@
 # under the License.
 #
 
-nest.name: "mynewt_stm32f3"
+app.name: "mynewt_stm32f3"
