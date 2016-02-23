@@ -400,7 +400,7 @@ hal_gpio_init(int pin, GPIO_InitTypeDef *cfg)
  * @return int  0: no error; -1 otherwise.
  */
 int
-gpio_init_in(int pin, enum gpio_pull pull)
+hal_gpio_init_in(int pin, enum gpio_pull pull)
 {
     GPIO_InitTypeDef init_cfg;
 
@@ -424,7 +424,7 @@ gpio_init_in(int pin, enum gpio_pull pull)
  * @return int  0: no error; -1 otherwise.
  */
 int
-gpio_init_out(int pin, int val)
+hal_gpio_init_out(int pin, int val)
 {
     GPIO_InitTypeDef init_cfg;
 
@@ -468,9 +468,9 @@ hal_gpio_init_af(int pin, uint8_t af_type, enum gpio_pull pull)
  * @param pin
  */
 void
-gpio_set(int pin)
+hal_gpio_set(int pin)
 {
-    gpio_write(pin, 1);
+    hal_gpio_write(pin, 1);
 }
 
 /**
@@ -481,9 +481,9 @@ gpio_set(int pin)
  * @param pin
  */
 void
-gpio_clear(int pin)
+hal_gpio_clear(int pin)
 {
-    gpio_write(pin, 0);
+    hal_gpio_write(pin, 0);
 }
 
 /**
@@ -495,7 +495,7 @@ gpio_clear(int pin)
  * @param val Value to set pin (0:low 1:high)
  */
 void
-gpio_write(int pin, int val)
+hal_gpio_write(int pin, int val)
 {
     int port;
     uint32_t mcu_pin_mask;
@@ -515,7 +515,7 @@ gpio_write(int pin, int val)
  * @return int 0: low, 1: high
  */
 int
-gpio_read(int pin)
+hal_gpio_read(int pin)
 {
     int port;
     uint32_t mcu_pin_mask;
@@ -533,9 +533,9 @@ gpio_read(int pin)
  * @param pin Pin number to toggle
  */
 void
-gpio_toggle(int pin)
+hal_gpio_toggle(int pin)
 {
-    gpio_write(pin, !gpio_read(pin));
+    hal_gpio_write(pin, !hal_gpio_read(pin));
 }
 
 /**
@@ -552,8 +552,8 @@ gpio_toggle(int pin)
  * @return int
  */
 int
-gpio_irq_init(int pin, gpio_irq_handler_t handler, void *arg,
-              gpio_irq_trig_t trig, enum gpio_pull pull)
+hal_gpio_irq_init(int pin, gpio_irq_handler_t handler, void *arg,
+                  gpio_irq_trig_t trig, enum gpio_pull pull)
 {
     int rc;
     int irqn;
@@ -597,10 +597,10 @@ gpio_irq_init(int pin, gpio_irq_handler_t handler, void *arg,
     /* Check to make sure no error has occurred */
     if (!rc) {
         /* Disable interrupt and clear any pending */
-        gpio_irq_disable(pin);
+        hal_gpio_irq_disable(pin);
         EXTI_ClearFlag(pin_mask);
 
-        gpio_init_in(pin, pull);
+        hal_gpio_init_in(pin, pull);
 
         /* Configure SYSCFG */
         RCC_APB2PeriphClockCmd(RCC_APB2Periph_SYSCFG, ENABLE);
@@ -636,13 +636,13 @@ gpio_irq_init(int pin, gpio_irq_handler_t handler, void *arg,
  * @param pin
  */
 void
-gpio_irq_release(int pin)
+hal_gpio_irq_release(int pin)
 {
     int index;
     uint32_t pin_mask;
 
     /* Disable the interrupt */
-    gpio_irq_disable(pin);
+    hal_gpio_irq_disable(pin);
 
     /* Clear any pending interrupts */
     pin_mask = GPIO_MASK(pin);
@@ -662,7 +662,7 @@ gpio_irq_release(int pin)
  * @param pin
  */
 void
-gpio_irq_enable(int pin)
+hal_gpio_irq_enable(int pin)
 {
     uint32_t ctx;
     uint32_t mask;
@@ -681,7 +681,7 @@ gpio_irq_enable(int pin)
  * @param pin
  */
 void
-gpio_irq_disable(int pin)
+hal_gpio_irq_disable(int pin)
 {
     uint32_t ctx;
     uint32_t mask;
