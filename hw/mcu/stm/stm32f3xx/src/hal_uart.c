@@ -108,6 +108,7 @@ uart_irq_handler(int num)
         }
         u->u_tx_end = 0;
         regs->CR1 &= ~USART_CR1_TCIE;
+	regs->ICR |= USART_ICR_TCCF;
     }
 }
 
