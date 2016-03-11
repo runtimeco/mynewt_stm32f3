@@ -18,6 +18,11 @@
 #
 
 pkg.name: "hw/bsp/stm32f3discovery"
+pkg.type: bsp
+pkg.repository: https://github.com/runtimeinc/mynewt_stm32f3
+
+pkg.arch: cortex_m4
+pkg.compiler: "@apache-mynewt-core/compiler/arm-none-eabi-m4"
 pkg.linkerscript: "stm32f3discovery.ld"
 pkg.linkerscript.bootloader.OVERWRITE: "boot-stm32f3discovery.ld"
 pkg.downloadscript: "stm32f3discovery_download.sh"
