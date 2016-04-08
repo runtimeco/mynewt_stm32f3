@@ -29,4 +29,5 @@ pkg.downloadscript: "stm32f3discovery_download.sh"
 pkg.debugscript: "stm32f3discovery_debug.sh"
 pkg.cflags: -DSTM32F303xC
 pkg.deps:
+    - "@apache-mynewt-core/libs/baselibc"
     - hw/mcu/stm/stm32f3xx
