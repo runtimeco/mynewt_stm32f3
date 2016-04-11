@@ -16,14 +16,15 @@
  * specific language governing permissions and limitations
  * under the License.
  */
+#include <sys/types.h>
+#include <hal/flash_map.h>
+
 void *_sbrk(int incr);
 void _close(int fd);
 
 /*
  * XXXX for now have it here.
  */
-#include <hal/flash_map.h>
-
 static struct flash_area bsp_flash_areas[] = {
     [FLASH_AREA_BOOTLOADER] = {
         .fa_flash_id = 0,       /* internal flash */
