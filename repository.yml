@@ -1,4 +1,6 @@
 repo.name: mynewt_stm32f3
 repo.versions:
-    "0.0.0": "develop"
+    "0.0.0": "mynewt_stm32f3_0_0_0_tag"
+    "0.0.1": "develop"
     "0-latest": "0.0.0"
+    "0-dev": "0.0.1"
