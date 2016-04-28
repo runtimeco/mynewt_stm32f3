@@ -16,12 +16,21 @@
  * specific language governing permissions and limitations
  * under the License.
  */
+#ifndef BSP_SYSID_H
+#define BSP_SYSID_H
 
-#ifndef __MCU_CORTEX_M4_H__
-#define __MCU_CORTEX_M4_H__
+#ifdef __cplusplus
+extern "C" {
+#endif
 
-#include "mcu/stm32f30x.h"
+enum system_device_id  
+{
+        NONE = 0,
+};
 
-#define OS_TICKS_PER_SEC	(1000)
+#ifdef __cplusplus
+}
+#endif
 
-#endif /* __MCU_CORTEX_M4_H__ */
+#endif /* BSP_SYSID_H */
+

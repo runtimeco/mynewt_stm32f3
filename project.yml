@@ -17,4 +17,16 @@
 # under the License.
 #
 
-app.name: "mynewt_stm32f3"
+project.name: "mynewt_stm32f3"
+
+project.repositories:
+    - apache-mynewt-core
+
+# Use github's distribution mechanism for core ASF libraries.
+# This provides mirroring automatically for us.
+#
+repository.apache-mynewt-core:
+    type: github
+    vers: 0-latest
+    user: apache
+    repo: incubator-mynewt-core
