@@ -18,6 +18,7 @@
  */
 #include <stddef.h>
 
+#include "hal/hal_bsp.h"
 #include "hal/hal_gpio.h"
 #include "hal/hal_flash_int.h"
 #include "mcu/stm32f30x.h"

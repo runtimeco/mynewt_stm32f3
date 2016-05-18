@@ -18,8 +18,8 @@
  */
 #include <sys/types.h>
 #include <hal/flash_map.h>
+#include <hal/hal_bsp.h>
 
-void *_sbrk(int incr);
 void _close(int fd);
 
 /*

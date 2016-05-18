@@ -18,6 +18,7 @@
  */
 
 #include <errno.h>
+#include <hal/hal_bsp.h>
 
 extern char _heap;
 extern char _eheap;
