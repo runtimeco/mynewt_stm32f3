@@ -19,6 +19,8 @@
 #ifndef H_BSP_H
 #define H_BSP_H
 
+#include <inttypes.h>
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -30,6 +32,15 @@ extern "C" {
 
 /* More convenient section placement macros. */
 #define bssnz_t         sec_bss_nz_core
+
+/*
+ * Symbols from linker script.
+ */
+extern uint8_t _sram_start;
+extern uint8_t _ccram_start;
+
+#define SRAM_SIZE (40 * 1024)
+#define CCRAM_SIZE (8 *1024)
 
 /* LED pins */
 #define LED_BLINK_PIN   (72)

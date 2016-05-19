@@ -66,6 +66,8 @@ SECTIONS {
 	.heap : {
 		_heap = .;
 	} > SRAM
+	_sram_start = ORIGIN(SRAM);
+	_ccram_start = ORIGIN(CCRAM);
 	_eheap = ORIGIN(SRAM) + LENGTH(SRAM);
 	_estack = ORIGIN(CCRAM) + LENGTH(CCRAM);
 }
