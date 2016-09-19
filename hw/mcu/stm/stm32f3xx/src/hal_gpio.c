@@ -6,7 +6,7 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *  http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing,
@@ -62,7 +62,7 @@
  *          - Multiply by 16.
  *          - Add port pin number.
  *
- *      Ex: PD11 = (4 * 16) + 11 = 75.
+ *      Ex: PD11 = (3 * 16) + 11 = 59.
  *          PA0 = (0 * 16) + 0 = 0
  */
 #define GPIO_INDEX(pin)     ((pin) & 0x0F)
