@@ -117,7 +117,7 @@ static GPIO_TypeDef * const portmap[HAL_GPIO_NUM_PORTS] =
 /* Storage for GPIO callbacks. */
 struct gpio_irq_obj {
     void *arg;
-    gpio_irq_handler_t isr;
+    hal_gpio_irq_handler_t isr;
 };
 
 static struct gpio_irq_obj gpio_irq_handlers[16];
@@ -304,14 +304,14 @@ hal_gpio_pin_to_irq(int pin)
 }
 
 static uint8_t
-hal_gpio_pull_to_cfg(enum gpio_pull pull)
+hal_gpio_pull_to_cfg(enum hal_gpio_pull pull)
 {
     switch (pull) {
     default:
         return GPIO_PuPd_NOPULL;
-    case GPIO_PULL_UP:
+    case HAL_GPIO_PULL_UP:
         return GPIO_PuPd_UP;
-    case GPIO_PULL_DOWN:
+    case HAL_GPIO_PULL_DOWN:
         return GPIO_PuPd_DOWN;
     }
 }
@@ -400,7 +400,7 @@ hal_gpio_init(int pin, GPIO_InitTypeDef *cfg)
  * @return int  0: no error; -1 otherwise.
  */
 int
-hal_gpio_init_in(int pin, enum gpio_pull pull)
+hal_gpio_init_in(int pin, enum hal_gpio_pull pull)
 {
     GPIO_InitTypeDef init_cfg;
 
@@ -442,7 +442,7 @@ hal_gpio_init_out(int pin, int val)
  * Configure the specified pin for AF.
  */
 int
-hal_gpio_init_af(int pin, uint8_t af_type, enum gpio_pull pull)
+hal_gpio_init_af(int pin, uint8_t af_type, enum hal_gpio_pull pull)
 {
     GPIO_InitTypeDef gpio;
     int rc;
@@ -556,8 +556,8 @@ hal_gpio_toggle(int pin)
  * @return int
  */
 int
-hal_gpio_irq_init(int pin, gpio_irq_handler_t handler, void *arg,
-                  gpio_irq_trig_t trig, enum gpio_pull pull)
+hal_gpio_irq_init(int pin, hal_gpio_irq_handler_t handler, void *arg,
+                  hal_gpio_irq_trig_t trig, enum hal_gpio_pull pull)
 {
     int rc;
     int irqn;
@@ -574,22 +574,22 @@ hal_gpio_irq_init(int pin, gpio_irq_handler_t handler, void *arg,
     exti_cfg.EXTI_Line = index;
     exti_cfg.EXTI_Mode = EXTI_Mode_Interrupt;
     switch (trig) {
-    case GPIO_TRIG_NONE:
+    case HAL_GPIO_TRIG_NONE:
         rc = -1;
         break;
-    case GPIO_TRIG_RISING:
+    case HAL_GPIO_TRIG_RISING:
         exti_cfg.EXTI_Trigger = EXTI_Trigger_Rising;
         break;
-    case GPIO_TRIG_FALLING:
+    case HAL_GPIO_TRIG_FALLING:
         exti_cfg.EXTI_Trigger = EXTI_Trigger_Falling;
         break;
-    case GPIO_TRIG_BOTH:
+    case HAL_GPIO_TRIG_BOTH:
         exti_cfg.EXTI_Trigger = EXTI_Trigger_Rising_Falling;
         break;
-    case GPIO_TRIG_LOW:
+    case HAL_GPIO_TRIG_LOW:
         rc = -1;
         break;
-    case GPIO_TRIG_HIGH:
+    case HAL_GPIO_TRIG_HIGH:
         rc = -1;
         break;
     default:

@@ -6,7 +6,7 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *  http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing,
@@ -40,7 +40,7 @@ const struct stm32f3_uart_cfg *bsp_uart_config(int port);
 /*
  * Internal API for stm32f3xx mcu specific code.
  */
-int hal_gpio_init_af(int pin, uint8_t af_type, enum gpio_pull pull);
+int hal_gpio_init_af(int pin, uint8_t af_type, enum hal_gpio_pull pull);
 
 struct hal_flash;
 extern const struct hal_flash stm32f3_flash_dev;
