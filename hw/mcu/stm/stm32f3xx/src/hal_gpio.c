@@ -461,32 +461,6 @@ hal_gpio_init_af(int pin, uint8_t af_type, enum hal_gpio_pull pull)
 }
 
 /**
- * gpio set
- *
- * Sets specified pin to 1 (high)
- *
- * @param pin
- */
-void
-hal_gpio_set(int pin)
-{
-    hal_gpio_write(pin, 1);
-}
-
-/**
- * gpio clear
- *
- * Sets specified pin to 0 (low).
- *
- * @param pin
- */
-void
-hal_gpio_clear(int pin)
-{
-    hal_gpio_write(pin, 0);
-}
-
-/**
  * gpio write
  *
  * Write a value (either high or low) to the specified pin.
