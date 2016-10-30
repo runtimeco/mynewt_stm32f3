@@ -77,3 +77,20 @@ bsp_core_dump(int *area_cnt)
     *area_cnt = sizeof(dump_cfg) / sizeof(dump_cfg[0]);
     return dump_cfg;
 }
+
+/**
+ * Returns the configured priority for the given interrupt. If no priority
+ * configured, return the priority passed in
+ *
+ * @param irq_num
+ * @param pri
+ *
+ * @return uint32_t
+ */
+uint32_t
+hal_bsp_get_nvic_priority(int irq_num, uint32_t pri)
+{
+    /* Add any interrupt priorities configured by the bsp here */
+    return pri;
+}
+
