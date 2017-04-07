@@ -16,41 +16,42 @@
 # specific language governing permissions and limitations
 # under the License.
 #
-# Called: $0 <bsp_directory_path> <binary> [features...]
-#  - bsp_directory_path is absolute path to hw/bsp/bsp_name
-#  - binary is the path to prefix to target binary, .elf.bin appended to this
-#    name is the raw binary format of the binary.
-#  - identities is the project identities string. So you can have e.g. different
-#    flash offset for bootloader identity
-# 
-#
-if [ $# -lt 2 ]; then
+
+# Called with following variables set:
+#  - BSP_PATH is absolute path to hw/bsp/bsp_name
+#  - BIN_BASENAME is the path to prefix to target binary,
+#    .elf appended to name is the ELF file
+#  - IMAGE_SLOT is the image slot to download to (for non-mfg-image, non-boot)
+#  - FEATURES holds the target features string
+#  - EXTRA_JTAG_CMD holds extra parameters to pass to jtag software
+#  - MFG_IMAGE is "1" if this is a manufacturing image
+
+if [ -z "$BIN_BASENAME" ]; then
     echo "Need binary to download"
     exit 1
 fi
 
-BASENAME=$2
 IS_BOOTLOADER=0
 
-# Look for 'bootloader' from 2nd arg onwards
-shift
-shift
-while [ $# -gt 0 ]; do
-    if [ $1 = "bootloader" ]; then
+# Look for 'bootloader' in FEATURES
+for feature in $FEATURES; do
+    if [ $feature == "bootloader" ]; then
         IS_BOOTLOADER=1
     fi
-    shift
 done
 
-if [ $IS_BOOTLOADER -eq 1 ]; then
+if [ "$MFG_IMAGE" -eq 1 ]; then
     FLASH_OFFSET=0x08000000
-    FILE_NAME=$BASENAME.elf.bin
+    FILE_NAME=$BASENAME.bin
+elif [ $IS_BOOTLOADER -eq 1 ]; then
+    FLASH_OFFSET=0x08000000
+    FILE_NAME=$BIN_BASENAME.elf.bin
 else
     FLASH_OFFSET=0x08009000
-    FILE_NAME=$BASENAME.img
+    FILE_NAME=$BIN_BASENAME.img
 fi
 
 echo "Downloading" $FILE_NAME "to" $FLASH_OFFSET
 
-openocd -f board/stm32f3discovery.cfg -c init -c "reset halt" -c "flash write_image erase $FILE_NAME $FLASH_OFFSET" -c "reset run" -c shutdown
+openocd -f board/stm32f3discovery.cfg -c "$EXTRA_JTAG_CMD" -c init -c "reset halt" -c "flash write_image erase $FILE_NAME $FLASH_OFFSET" -c "reset run" -c shutdown
 

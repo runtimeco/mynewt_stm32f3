@@ -6,7 +6,7 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  *  http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing,
@@ -18,6 +18,7 @@
  */
 #include <stddef.h>
 
+#include "hal/hal_bsp.h"
 #include "hal/hal_gpio.h"
 #include "hal/hal_flash_int.h"
 #include "mcu/stm32f30x.h"
@@ -40,6 +41,17 @@ static const struct stm32f3_uart_cfg uart_cfg[UART_CNT] = {
     }
 };
 
+static const struct bsp_mem_dump dump_cfg[] = {
+    [0] = {
+	.bmd_start = &_sram_start,
+        .bmd_size = SRAM_SIZE
+    },
+    [1] = {
+        .bmd_start = &_ccram_start,
+        .bmd_size = CCRAM_SIZE
+    }
+};
+
 const struct stm32f3_uart_cfg *
 bsp_uart_config(int port)
 {
@@ -58,3 +70,27 @@ bsp_flash_dev(uint8_t id)
     }
     return &stm32f3_flash_dev;
 }
+
+const struct bsp_mem_dump *
+bsp_core_dump(int *area_cnt)
+{
+    *area_cnt = sizeof(dump_cfg) / sizeof(dump_cfg[0]);
+    return dump_cfg;
+}
+
+/**
+ * Returns the configured priority for the given interrupt. If no priority
+ * configured, return the priority passed in
+ *
+ * @param irq_num
+ * @param pri
+ *
+ * @return uint32_t
+ */
+uint32_t
+hal_bsp_get_nvic_priority(int irq_num, uint32_t pri)
+{
+    /* Add any interrupt priorities configured by the bsp here */
+    return pri;
+}
+

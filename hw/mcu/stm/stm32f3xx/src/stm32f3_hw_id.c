@@ -16,25 +16,27 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-#include <mcu/cortex_m4.h>
-#include "hal/hal_system.h"
 
-void
-system_reset(void)
-{
-    while (1) {
-        if (system_debugger_connected()) {
-            /*
-             * If debugger is attached, breakpoint here.
-             */
-            asm("bkpt");
-        }
-        NVIC_SystemReset();
-    }
-}
+#include <inttypes.h>
+#include <string.h>
 
+#include <hal/hal_bsp.h>
+
+#ifndef min
+#define min(a, b) ((a)<(b)?(a):(b))
+#endif
+
+/*
+ * STM32F3 has a unique 96-bit id at address 0x1FFFF7AC
+ * See ref manual chapter 34.1.
+ */
 int
-system_debugger_connected(void)
+bsp_hw_id(uint8_t *id, int max_len)
 {
-    return CoreDebug->DHCSR & CoreDebug_DHCSR_C_DEBUGEN_Msk;
+    int cnt;
+
+    cnt = min(12, max_len);
+    memcpy(id, (void *)0x1FFFF7AC, cnt);
+
+    return cnt;
 }

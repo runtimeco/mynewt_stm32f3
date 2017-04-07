@@ -19,6 +19,8 @@
 #ifndef H_BSP_H
 #define H_BSP_H
 
+#include <inttypes.h>
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -31,8 +33,27 @@ extern "C" {
 /* More convenient section placement macros. */
 #define bssnz_t         sec_bss_nz_core
 
+/*
+ * Symbols from linker script.
+ */
+extern uint8_t _sram_start;
+extern uint8_t _ccram_start;
+
+#define SRAM_SIZE (40 * 1024)
+#define CCRAM_SIZE (8 *1024)
+
 /* LED pins */
-#define LED_BLINK_PIN   (72)
+#define LED_BLINK_PIN_1   (72)
+#define LED_BLINK_PIN_2   (73)
+#define LED_BLINK_PIN_3   (74)
+#define LED_BLINK_PIN_4   (75)
+#define LED_BLINK_PIN_5   (76)
+#define LED_BLINK_PIN_6   (77)
+#define LED_BLINK_PIN_7   (78)
+#define LED_BLINK_PIN_8   (79)
+    
+#define LED_BLINK_PIN LED_BLINK_PIN_1
+    
 
 /* UART ports */
 #define UART_CNT        1
@@ -45,8 +66,6 @@ extern "C" {
  * your max is less than the number of sectors then the NFFS will combine
  * multiple sectors into an NFFS area */
 #define NFFS_AREA_MAX    (8)
-
-int bsp_imgr_current_slot(void);
 
 #ifdef __cplusplus
 }
